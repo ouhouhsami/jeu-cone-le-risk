@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'surveys',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -38,12 +39,12 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = '<project_name>.urls'
+ROOT_URLCONF = 'risks.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+        'DIRS': [os.path.join(BASE_DIR, 'risks', 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -56,7 +57,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '<project_name>.wsgi.application'
+
+WSGI_APPLICATION = 'risks.wsgi.application'
 
 
 # Database
@@ -108,5 +110,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/static'
 
-MEDIA_URL = '/static/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = '/var/www/media'

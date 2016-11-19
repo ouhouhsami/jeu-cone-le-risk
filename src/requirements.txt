@@ -4,3 +4,5 @@ psycopg2==2.6.2
 six==1.10.0
 uwsgi==2.0.14
 wsgiref==0.1.2
+selenium
+scrapy

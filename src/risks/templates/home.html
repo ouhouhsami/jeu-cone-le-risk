@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style type="text/css">
+
+  .form {
+    display: none;
+  }
+</style>
+
+    <script type="text/javascript">
+
+      var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log('Latitude : ' + crd.latitude);
+  console.log('Longitude: ' + crd.longitude);
+  console.log('More or less ' + crd.accuracy + ' meters.');
+  $('#id_lat').val(crd.latitude)
+  $('#id_lng').val(crd.longitude)
+  $('.form').css('display', 'block');
+};
+
+function error(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+};
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+
+    </script>
+    {% endblock %}
+
+{% block body %}
+
+
+    <h2>A quels risques pensez-vous être exposé ?</h2>
+
+
+<form action="{% url 'home' %}" method="POST">
+
+{% csrf_token %}
+
+<div style="display: none">
+
+{{ form.lat }}
+{{ form.lng }}
+
+</div>
+
+<div class="form">
+
+  <div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.innodation }}
+    <span class="custom-control-description">Innondation ?</span>
+  </label>
+  </div>
+<!--
+    Localisation exposée à une remontée de nappe dans les sédiments
+    Localisation exposée à une remontée de nappe dans le socle
+    Type d'exposition -->
+
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.argile }}
+    <span class="custom-control-description">Retrait-gonflements des argiles ?</span>
+  </label>
+  </div>
+
+  <!--   Localisation exposée aux retrait-gonflements des argiles
+    Type d'exposition -->
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.mouvement_terrain }}
+    <span class="custom-control-description">Mouvements de terrain recensés (dans un rayon de 200m) ?</span>
+  </label>
+  </div>
+
+
+<!-- Mouvements de terrain recensés dans un rayon de 200m -->
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.cavite }}
+    <span class="custom-control-description">Cavités recensées (dans un rayon de 200m) ?</span>
+  </label>
+  </div>
+
+    <!-- Cavités recensées dans un rayon de 200m -->
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.seisme }}
+    <span class="custom-control-description">Séismes ?</span>
+  </label>
+  </div>
+
+    <!-- Localisation exposée aux séismes -->
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.sites_pollues }}
+    <span class="custom-control-description">Sites pollués (dans un rayon de 200m) ?</span>
+  </label>
+  </div>
+
+<!--     Sites pollués dans un rayon de 200m
+    Ancien site industriel et activité de service
+      non localisé sur la commune : Oui
+      dans un rayon de 200 m : Non -->
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.installations_classees }}
+    <span class="custom-control-description">Installations classées à proximité ?</span>
+  </label>
+  </div>
+
+<!--     Votre installation est concernée par des installations classées
+    Votre installation est impactée par des installations classées -->
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.canalisation }}
+    <span class="custom-control-description">Canalisations de matières dangereuses (dans un rayon de 100m) ?</span>
+  </label>
+  </div>
+
+<!--     Canalisations de matières dangereuses dans un rayon de 100m -->
+
+<div class="form-group">
+  <label class="custom-control custom-checkbox">
+    {{ form.nucleair }}
+    <span class="custom-control-description">Installations nucléaire (dans un rayon de 20km) ?</span>
+  </label>
+  </div>
+
+<!--     Installations nucléaires dans un rayon de 10km
+    Centrales nucléaires dans un rayon de 20km -->
+
+<button class="btn btn-primary btn-block" type='submit'>Valider vos réponses</button>
+
+
+</div>
+
+</form>
+
+
+{% endblock %}
