@@ -1,7 +1,137 @@
 {% extends 'base.html' %}
 
 {% block body %}
-Résultat
 
-{{ result }}
+<br>
+<h5>Résultats</h5>
+<hr>
+
+{% if instance.innodation == results.0 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Risques d'innondation : {% if instance.innodation %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Risques d'innondation : {% if results.0 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+{% if instance.argile == results.1 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Risques de retrait ou gonflements des sols : {% if instance.innodation %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Risques de retrait ou gonflements des sols : {% if results.1 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+
+{% if instance.mouvement_terrain == results.2 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Risques de mouvements de terrain : {% if instance.mouvement_terrain %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Risques de mouvements de terrain : {% if results.2 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+
+{% if instance.cavite == results.3 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Risques d'affaisements ou d'effondrements  : {% if instance.mouvement_terrain %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Risques d'affaisements ou d'effondrements  : {% if results.3 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+{% if instance.seisme == results.4 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Risques de séismes : {% if instance.mouvement_terrain %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Risques de séismes : {% if results.4 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+{% if instance.sites_pollues == results.5 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Sites pollués situés à proximité : {% if instance.mouvement_terrain %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Sites pollués situés à proximité : {% if results.5 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+{% if instance.installations_classees == results.6 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Risques industriels à proximité : {% if instance.mouvement_terrain %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Risques industriels à proximité : {% if results.6 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+{% if instance.canalisation == results.7 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Canalisations de matières dangereuses à proximité : {% if instance.mouvement_terrain %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Canalisations de matières dangereuses à proximité : {% if results.7 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
+{% if instance.nucleair == results.8 %}
+<div class="card card-inverse card-success">
+<div class="card-block">
+	Risque nucléaire (installation nucléaire ou centrale nucléaire dans un rayon de 20km)  : {% if instance.mouvement_terrain %}Oui{% else %}Non{% endif %}
+</div>
+</div>
+{% else %}
+<div class="card card-inverse card-danger">
+<div class="card-block">
+	Risque nucléaire (installation nucléaire ou centrale nucléaire dans un rayon de 20km)  : {% if results.8 %}Si{% else %}Non{% endif %}
+</div>
+</div>
+{% endif %}
+
 {% endblock %}

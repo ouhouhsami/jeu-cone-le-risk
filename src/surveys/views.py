@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from scrapy.selector import Selector
+
+import random
 
 from django.shortcuts import render
 
@@ -10,18 +15,18 @@ def scrap(lat, lng):
 
     url = 'http://www.georisques.gouv.fr/ma_maison_mes_risques/rapport?lon=%s&lat=%s' % (lng, lat)
     print url
-    browser = webdriver.PhantomJS()
-    browser.set_page_load_timeout(90)
-    browser.get(url)
-    html = browser.page_source
+    # browser = webdriver.PhantomJS()
+    # browser.get(url)
 
-    selector = Selector(text=html)
+    # html = browser.page_source
+    html = False
+    # selector = Selector(text=html)
 
     data = [
         {'fieldset':u'Innondations',
          'fields':[
-            {'label':u'Localisation exposée à une remontée de nappe dans les sédiments', 'xpath':'//*[@id="alea-INN"]/ul[2]/li/text()'},
-            {'label':u'Localisation exposée à une remontée de nappe dans le socle', 'xpath':'//*[@id="alea-INN"]/ul[3]/li[1]/text()'},
+            {'label':u'Localisation exposée à une remontée de nappe dans les sédiments', 'xpath':'//*[@id="alea-INN"]/ul[2]/li[1]/text()'},
+            {'label':u'Localisation exposée à une remontée de nappe dans le socle', 'xpath':'//*[@id="alea-INN"]/ul[3]/li/text()'},
             {'label':u'Type d\'exposition', 'xpath':'//*[@id="alea-INN"]/ul[3]/li[2]/text()'},
         ]},
         {'fieldset':u'Retrait-gonflements des argiles',
@@ -67,9 +72,20 @@ def scrap(lat, lng):
 
     for d in data:
         for f in d['fields']:
-            f['value'] = selector.xpath(f['xpath']).extract()[0]
+            # try:
+            #     f['value'] = selector.xpath(f['xpath']).extract()
+            # except:
+            f['value'] = random.choice([True, False])
 
-    return data
+    results = []
+    for d in data:
+        vals = [f['value'] for f in d['fields']]
+        if any(vals):
+            results.append(True)
+        else:
+            results.append(False)
+
+    return results, data, html
 
 
 def home(request):
@@ -79,12 +95,13 @@ def home(request):
             instance = form.save()
             lat = instance.lat
             lng = instance.lng
-            result = scrap(lat, lng)
-            print result
+            results, data, html = scrap(lat, lng)
+            print results
             return render(request, 'result.html', {
                 'form': form,
                 'instance': instance,
-                'result': result
+                'results': results,
+                'html': html
             })
     form = SurveyForm()
     return render(request, 'home.html', {
